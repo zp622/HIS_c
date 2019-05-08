@@ -14,8 +14,8 @@ namespace HIS_c.Controllers
     {
         private UserService userService = new UserService();
         // Post api/User/
-    //    [EnableCors(origins: "http://localhost:8080", headers: "*",
-    //methods: "*", SupportsCredentials = true)]
+        [EnableCors(origins: "http://localhost:8080", headers: "*",
+    methods: "*", SupportsCredentials = true)]
         [HttpPost]
         public ApiResult<List<UserModel>> userLogin([FromBody]UserModel userInfo)
         {
