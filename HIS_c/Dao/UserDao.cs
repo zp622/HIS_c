@@ -64,7 +64,7 @@ namespace HIS_c.Dao
             string sql = "update h_user set login_flag = :loginFlag where job_number = :jobNumber";
             OracleParameter[] parameters = {
                 new OracleParameter("jobNumber", jobNumber),
-                new OracleParameter("password", "N")
+                new OracleParameter("loginFlag", "N")
             };
             return OracleHelper.ExecuteSql(sql, parameters);
         }
