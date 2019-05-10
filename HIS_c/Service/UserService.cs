@@ -25,5 +25,23 @@ namespace HIS_c.Service
             }
             return apiResult;
         }
+
+        public ApiResult<UserModel> exitLogin(string jobNumber)
+        {
+            ApiResult<UserModel> apiResult = new ApiResult<UserModel>();
+            if (userDao.exitLogin(jobNumber) == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "注销成功";
+                apiResult.data = null;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "注销失败";
+                apiResult.data = null;
+            }
+            return apiResult;
+        }
     }
 }

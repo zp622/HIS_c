@@ -28,5 +28,11 @@ namespace HIS_c.Controllers
             return null;
         }
 
+        [HttpGet]
+        public ApiResult<UserModel> exitLogin(string jobNumber)
+        {
+            return userService.exitLogin(jobNumber);
+        }
+
     }
 }
