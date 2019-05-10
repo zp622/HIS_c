@@ -23,11 +23,13 @@ namespace HIS_c.Models
         // 创建者
         public String creator { get; set; }
         // 创建时间
-        public String createName { get; set; }
+        public String createTame { get; set; }
         // 更新者
         public String updater { get; set; }
         // 更新时间
         public String updaterTime { get; set; }
+        //用户状态
+        public string userStatus { get; set; }
         
         public UserModel() { }
     }

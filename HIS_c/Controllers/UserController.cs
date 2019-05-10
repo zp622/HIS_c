@@ -28,11 +28,58 @@ namespace HIS_c.Controllers
             return null;
         }
 
+        /// <summary>
+        /// 退出登录
+        /// </summary>
+        /// <param name="jobNumber"></param>
+        /// <returns></returns>
         [HttpGet]
         public ApiResult<UserModel> exitLogin(string jobNumber)
         {
             return userService.exitLogin(jobNumber);
         }
 
+        /// <summary>
+        /// 添加用户
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<List<UserModel>> addUser([FromBody]UserModel user)
+        {
+            return userService.addUser(user);
+        }
+
+        /// <summary>
+        /// 根据职工号删除用户
+        /// </summary>
+        /// <param name="jobNumber"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ApiResult<List<UserModel>> delUser(string jobNumber)
+        {
+            return userService.delUser(jobNumber);
+        }
+
+        /// <summary>
+        /// 修改用户信息
+        /// </summary>
+        /// <param name="user"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<List<UserModel>> updUser(UserModel user)
+        {
+            return userService.updUser(user);
+        }
+
+        /// <summary>
+        /// 获取所有用户
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet]
+        public ApiResult<List<UserModel>> getAll()
+        {
+            return userService.getAll();
+        }
     }
 }

@@ -69,6 +69,96 @@ namespace HIS_c.Dao
             return OracleHelper.ExecuteSql(sql, parameters);
         }
 
+        public int addUser(UserModel user)
+        {
+            string sql = "insert into his.h_user(job_number,password,name,role,name_en,login_flag,creator,user_status)" +
+                "values(:job_number,:password,:name,:role,:name_en,:login_flag,:creator,:user_status)";
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("job_number",user.jobNumber),
+                new OracleParameter("password",MD5Encrypt32(user.password)),
+                new OracleParameter("name",user.name),
+                new OracleParameter("role",user.role),
+                new OracleParameter("name_en",user.nameEn),
+                new OracleParameter("login_flag","N"),
+                new OracleParameter("creator",user.creator),
+                new OracleParameter("user_status","有效"),
+            };
+            return OracleHelper.ExecuteSql(sql,parameters);
+        }
+
+        public int delUser(string jobNumber)
+        {
+            string sql = "delete from his.h_user t where t.job_number = :jobNumber";
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("jobNumber",jobNumber)
+            };
+            return OracleHelper.ExecuteSql(sql, parameters);
+        }
+
+        public int updUser(UserModel user)
+        {
+            string sql = "update his.h_user set ";
+            if (user.password != null && user.password.Length != 0)
+            {
+                sql = sql + "password = '" + MD5Encrypt32(user.password) + "',";
+            }
+            if (user.userStatus != null && user.userStatus.Length != 0)
+            {
+                sql = sql + "user_status = '" + user.userStatus + "',";
+            }
+            if (user.name != null && user.name.Length != 0)
+            {
+                sql = sql + "name = '" + user.name + "',";
+            }
+            if(user.role!=null && user.role.Length != 0)
+            {
+                sql = sql + "role = '" + user.role + "',";
+            }
+            if (user.nameEn != null && user.nameEn.Length != 0)
+            {
+                sql = sql + "name_en = '" + user.nameEn + "',";
+            }
+            if (user.updater != null && user.updater.Length != 0)
+            {
+                sql = sql + "updater = '" + user.updater + "',";
+            }
+            sql = sql + "update_time = to_timestamp('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "','yyyy-mm-dd hh24:mi:ss.ff')";
+            if (user.jobNumber != null && user.jobNumber.Length != 0)
+            {
+                sql = sql + "where job_number = " + user.jobNumber;
+            }
+            else
+            {
+                return -1;
+            }
+            return OracleHelper.ExecuteSql(sql);
+        }
+
+        public List<UserModel> getAllUser()
+        {
+            string sql = "select t.JOB_NUMBER,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.creator,t.create_time,t.UPDATER,t.UPDATE_TIME,t.USER_STATUS from H_USER t";
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql);
+            List<UserModel> list = new List<UserModel>();
+            while (reader.Read())
+            {
+                UserModel userModel = new UserModel();
+                userModel.jobNumber = reader["JOB_NUMBER"].ToString();
+                userModel.name = reader["NAME"].ToString();
+                userModel.role = reader["ROLE"].ToString();
+                userModel.nameEn = reader["NAME_EN"].ToString();
+                userModel.loginFlag = reader["LOGIN_FLAG"].ToString();
+                userModel.updater = reader["UPDATER"].ToString();
+                userModel.updaterTime = reader["UPDATE_TIME"].ToString();
+                userModel.creator = reader["creator"].ToString();
+                userModel.createTame = reader["create_time"].ToString();
+                userModel.userStatus = reader["user_status"].ToString();
+                list.Add(userModel);
+            }
+            return list;
+        }
+        
         /// <summary>
         /// 32位MD5加密
         /// </summary>

@@ -43,5 +43,66 @@ namespace HIS_c.Service
             }
             return apiResult;
         }
+
+        public ApiResult<List<UserModel>> addUser(UserModel user)
+        {
+            if (userDao.addUser(user) == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "添加成功";
+                apiResult.data = userDao.getAllUser();
+            }
+            else{
+                apiResult.code = 199;
+                apiResult.message = "添加失败";
+                apiResult.data = null;
+            }
+
+            return apiResult;
+        }
+
+        public ApiResult<List<UserModel>> delUser(string jobNumber)
+        {
+            if (userDao.delUser(jobNumber) == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "删除成功";
+                apiResult.data = userDao.getAllUser();
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "删除失败";
+                apiResult.data = null;
+            }
+
+            return apiResult;
+        }
+
+        public ApiResult<List<UserModel>> updUser(UserModel user)
+        {
+            int i = userDao.updUser(user);
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "修改成功";
+                apiResult.data = userDao.getAllUser();
+            }
+            else if (i == -1)
+            {
+                apiResult.code = 198;
+                apiResult.message = "职工号必传";
+                apiResult.data = null;
+            }
+            return apiResult;
+        }
+
+        public ApiResult<List<UserModel>> getAll()
+        {
+            apiResult.code = 200;
+            apiResult.message = "查询成功";
+            apiResult.data = userDao.getAllUser();
+            return apiResult;
+        }
     }
 }
