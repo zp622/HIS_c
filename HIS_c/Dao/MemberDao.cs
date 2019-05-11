@@ -43,10 +43,11 @@ namespace HIS_c.Dao
         {
             string sql = "select t.job_number,t.id,t.name,t.sex,t.famous,t.birthday,t.title_rank,t.career_experience,t.address,t.email,t.phone,t.work_date,t.work_term,t.degree,t.creator,t.create_time,t.updater,t.update_time from his.h_member t";
             List<Member> list = new List<Member>();
-            Member member = new Member();
+            
             OracleDataReader reader = OracleHelper.ExecuteReader(sql);
             while (reader.Read())
             {
+                Member member = new Member();
                 member.jobNumber = reader["job_number"].ToString();
                 member.id = reader["id"].ToString();
                 member.name = reader["name"].ToString();
@@ -78,28 +79,73 @@ namespace HIS_c.Dao
 
         public int updMember(Member member)
         {
-            string sql = "update his.member t set ";
+            string sql = "update his.h_member t set ";
             if (isNotBlank(member.id))
             {
-                sql = sql + "id = " + member.id + ",";
+                sql = sql + "id = '" + member.id + "',";
             }
             if (isNotBlank(member.name))
             {
-                sql = sql + "name = " + member.name + "'";
+                sql = sql + "name = '" + member.name + "',";
             }
             if (isNotBlank(member.sex))
             {
-                sql = sql + "sex = " + member.sex + ",";
+                sql = sql + "sex = '" + member.sex + "',";
             }
             if (isNotBlank(member.famous))
             {
-                sql = sql + "famous = " + member.famous + ",";
+                sql = sql + "famous = '" + member.famous + "',";
             }
             if (isNotBlank(member.birthday))
             {
-                sql = sql + "birthday = " + member.birthday + ",";
+                sql = sql + "birthday = '" + member.birthday + "',";
             }
-            return 0;
+            if (isNotBlank(member.titleRank))
+            {
+                sql = sql + "title_rank = '" + member.titleRank + "',";
+            }
+            if (isNotBlank(member.careerExperince))
+            {
+                sql = sql + "career_experience = '" + member.careerExperince + "',";
+            }
+            if (isNotBlank(member.address))
+            {
+                sql = sql + "address = '" + member.address + "',";
+            }
+            if (isNotBlank(member.email))
+            {
+                sql = sql + "email = '" + member.email + "',";
+            }
+            if (isNotBlank(member.phone))
+            {
+                sql = sql + "phone = '" + member.phone + "',";
+            }
+            if (isNotBlank(member.workDate))
+            {
+                sql = sql + "work_date = '" + member.workDate + "',";
+            }
+            if (isNotBlank(member.workTerm))
+            {
+                sql = sql + "work_term = '" + member.workTerm + "',";
+            }
+            if (isNotBlank(member.degree))
+            {
+                sql = sql + "degree = '" + member.degree + "',";
+            }
+            if (isNotBlank(member.updater))
+            {
+                sql = sql + "updater = '" + member.updater + "',";
+            }
+            sql = sql + "update_time = to_timestamp('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "','yyyy-mm-dd hh24:mi:ss.ff')";
+            if (isNotBlank(member.jobNumber))
+            {
+                sql = sql + "where job_number = " + member.jobNumber;
+            }
+            else
+            {
+                return -1;
+            }
+            return OracleHelper.ExecuteSql(sql);
         }
 
         public static bool isNotBlank(string str)

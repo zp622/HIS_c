@@ -33,7 +33,7 @@ namespace HIS_c.Controllers
         /// </summary>
         /// <param name="jobNumber"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public ApiResult<UserModel> exitLogin(string jobNumber)
         {
             return userService.exitLogin(jobNumber);
@@ -55,7 +55,7 @@ namespace HIS_c.Controllers
         /// </summary>
         /// <param name="jobNumber"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public ApiResult<List<UserModel>> delUser(string jobNumber)
         {
             return userService.delUser(jobNumber);
@@ -76,7 +76,7 @@ namespace HIS_c.Controllers
         /// 获取所有用户
         /// </summary>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public ApiResult<List<UserModel>> getAll()
         {
             return userService.getAll();
@@ -87,7 +87,7 @@ namespace HIS_c.Controllers
         /// </summary>
         /// <param name="jobNumber"></param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public ApiResult<UserModel> isExit(string jobNumber)
         {
             return userService.isExits(jobNumber);
@@ -100,7 +100,7 @@ namespace HIS_c.Controllers
         /// <param name="name">姓名</param>
         /// <param name="role">角色</param>
         /// <returns></returns>
-        [HttpGet]
+        [HttpPost]
         public ApiResult<List<UserModel>> search(string jobNumber,string name,string role)
         {
             return userService.search(jobNumber, name, role);

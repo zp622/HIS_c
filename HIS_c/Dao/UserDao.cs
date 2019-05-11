@@ -199,10 +199,10 @@ namespace HIS_c.Dao
                 sql = sql + "and t.role = '" + role + "'";
             }
             OracleDataReader reader = OracleHelper.ExecuteReader(sql);
-            UserModel user = new UserModel();
             List<UserModel> list = new List<UserModel>();
             while (reader.Read())
             {
+                UserModel user = new UserModel();
                 user.jobNumber = reader["JOB_NUMBER"].ToString();
                 user.name = reader["NAME"].ToString();
                 user.role = reader["ROLE"].ToString();

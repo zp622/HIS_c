@@ -48,6 +48,16 @@ namespace HIS_c.Service
 
         public ApiResult<List<UserModel>> addUser(UserModel user)
         {
+            UserModel exitUser = userDao.getUserByNum(user.jobNumber);
+            if (user != null)
+            {
+                List<UserModel> list = new List<UserModel>();
+                list.Add(exitUser);
+                apiResult.code = 199;
+                apiResult.message = "职工号已存在";
+                apiResult.data = list;
+                return apiResult;
+            }
             if (userDao.addUser(user) == 1)
             {
                 apiResult.code = 200;

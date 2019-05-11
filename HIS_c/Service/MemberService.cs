@@ -39,6 +39,30 @@ namespace HIS_c.Service
             return apiResult;
         }
 
+
+        public ApiResult<List<Member>> updMember(Member member)
+        {
+            int i = memberDao.updMember(member);
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "修改成功";
+                apiResult.data = memberDao.getAll();
+            }
+            else if (i == -1)
+            {
+                apiResult.code = 198;
+                apiResult.message = "职工号必传";
+                apiResult.data = null;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "修改失败";
+                apiResult.data = null;
+            }
+            return apiResult;
+        }
     }
 
 }

@@ -13,16 +13,36 @@ namespace HIS_c.Controllers
     {
         private MemberService memberService = new MemberService();
 
+        /// <summary>
+        /// 添加员工
+        /// </summary>
+        /// <param name="member"></param>
+        /// <returns></returns>
         [HttpPost]
         public ApiResult<List<Member>> addMember(Member member)
         {
             return memberService.addMenber(member);
         }
 
-        [HttpGet]
+        /// <summary>
+        /// 获取所有员工信息
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost]
         public ApiResult<List<Member>> getAll()
         {
             return memberService.getAll();
+        }
+
+        /// <summary>
+        /// 修改员工信息
+        /// </summary>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<List<Member>> updMember(Member member)
+        {
+            return memberService.updMember(member);
         }
     }
 }
