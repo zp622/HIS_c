@@ -92,5 +92,31 @@ namespace HIS_c.Controllers
         {
             return userService.isExits(jobNumber);
         }
+
+        /// <summary>
+        /// 多字段模糊查询
+        /// </summary>
+        /// <param name="jobNumber">职工号</param>
+        /// <param name="name">姓名</param>
+        /// <param name="role">角色</param>
+        /// <returns></returns>
+        [HttpGet]
+        public ApiResult<List<UserModel>> search(string jobNumber,string name,string role)
+        {
+            return userService.search(jobNumber, name, role);
+        }
+
+        /// <summary>
+        /// 修改用户密码
+        /// </summary>
+        /// <param name="jobNumber"></param>
+        /// <param name="oldPwd"></param>
+        /// <param name="newPwd"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<UserModel> updPwd(string jobNumber,string oldPwd,string newPwd)
+        {
+            return userService.updPwd(jobNumber, oldPwd, newPwd);
+        }
     }
 }

@@ -100,32 +100,32 @@ namespace HIS_c.Dao
         public int updUser(UserModel user)
         {
             string sql = "update his.h_user set ";
-            if (user.password != null && user.password.Length != 0)
+            if (isNotBlank(user.password))
             {
                 sql = sql + "password = '" + MD5Encrypt32(user.password) + "',";
             }
-            if (user.userStatus != null && user.userStatus.Length != 0)
+            if (isNotBlank(user.userStatus))
             {
                 sql = sql + "user_status = '" + user.userStatus + "',";
             }
-            if (user.name != null && user.name.Length != 0)
+            if (isNotBlank(user.name))
             {
                 sql = sql + "name = '" + user.name + "',";
             }
-            if(user.role!=null && user.role.Length != 0)
+            if(isNotBlank(user.role))
             {
                 sql = sql + "role = '" + user.role + "',";
             }
-            if (user.nameEn != null && user.nameEn.Length != 0)
+            if (isNotBlank(user.nameEn))
             {
                 sql = sql + "name_en = '" + user.nameEn + "',";
             }
-            if (user.updater != null && user.updater.Length != 0)
+            if (isNotBlank(user.updater))
             {
                 sql = sql + "updater = '" + user.updater + "',";
             }
             sql = sql + "update_time = to_timestamp('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "','yyyy-mm-dd hh24:mi:ss.ff')";
-            if (user.jobNumber != null && user.jobNumber.Length != 0)
+            if (isNotBlank(user.jobNumber))
             {
                 sql = sql + "where job_number = " + user.jobNumber;
             }
@@ -183,6 +183,69 @@ namespace HIS_c.Dao
             }
             return user;
         }
+
+        public List<UserModel> search(string jobNumber,string name,string role)
+        {
+            string sql = "select t.JOB_NUMBER,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.creator,t.create_time,t.UPDATER,t.UPDATE_TIME,t.USER_STATUS from H_USER t where 1 = 1 ";
+            if (isNotBlank(jobNumber)){
+                sql = sql + "and t.job_number like '%" + jobNumber + "%' ";
+            }
+            if (isNotBlank(name))
+            {
+                sql = sql + "and t.name like '%" + name + "%' ";
+            }
+            if (isNotBlank(role))
+            {
+                sql = sql + "and t.role = '" + role + "'";
+            }
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql);
+            UserModel user = new UserModel();
+            List<UserModel> list = new List<UserModel>();
+            while (reader.Read())
+            {
+                user.jobNumber = reader["JOB_NUMBER"].ToString();
+                user.name = reader["NAME"].ToString();
+                user.role = reader["ROLE"].ToString();
+                user.nameEn = reader["NAME_EN"].ToString();
+                user.loginFlag = reader["LOGIN_FLAG"].ToString();
+                user.updater = reader["UPDATER"].ToString();
+                user.updaterTime = reader["UPDATE_TIME"].ToString();
+                user.creator = reader["creator"].ToString();
+                user.createTime = reader["create_time"].ToString();
+                user.userStatus = reader["user_status"].ToString();
+                list.Add(user);
+            }
+            return list;
+        }
+
+        public UserModel getUserByNum(string jobNumber)
+        {
+            String sql = "select t.JOB_NUMBER,t.PASSWORD,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.UPDATER,t.UPDATE_TIME from H_USER t where t.JOB_NUMBER = :jobNumber";
+            List<UserModel> list = new List<UserModel>();
+            OracleParameter[] parameters = {
+                new OracleParameter("jobNumber", jobNumber)
+            };
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql, parameters);
+            while (reader.Read())
+            {
+                UserModel userModel = new UserModel();
+                userModel.jobNumber = reader["JOB_NUMBER"].ToString();
+                userModel.name = reader["NAME"].ToString();
+                userModel.role = reader["ROLE"].ToString();
+                userModel.nameEn = reader["NAME_EN"].ToString();
+                userModel.loginFlag = reader["LOGIN_FLAG"].ToString();
+                userModel.updater = reader["UPDATER"].ToString();
+                userModel.updaterTime = reader["UPDATE_TIME"].ToString();
+                list.Add(userModel);
+            }
+            if(list.Count>0){
+                return list[0];
+            }
+            else
+            {
+                return null;
+            }
+        }
         
         /// <summary>
         /// 32位MD5加密
@@ -203,6 +266,18 @@ namespace HIS_c.Dao
                 pwd = pwd + s[i].ToString("X2");
             }
             return pwd;
+        }
+
+        public static bool isNotBlank(string str)
+        {
+            if (str != null && str.Length != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }
