@@ -89,7 +89,7 @@ namespace HIS_c.Dao
 
         public int delUser(string jobNumber)
         {
-            string sql = "delete from his.h_user t where t.job_number = :jobNumber";
+            string sql = "update his.h_user t set t.user_status = '无效' where t.job_number = :jobNumber";
             OracleParameter[] parameters =
             {
                 new OracleParameter("jobNumber",jobNumber)
@@ -152,11 +152,36 @@ namespace HIS_c.Dao
                 userModel.updater = reader["UPDATER"].ToString();
                 userModel.updaterTime = reader["UPDATE_TIME"].ToString();
                 userModel.creator = reader["creator"].ToString();
-                userModel.createTame = reader["create_time"].ToString();
+                userModel.createTime = reader["create_time"].ToString();
                 userModel.userStatus = reader["user_status"].ToString();
                 list.Add(userModel);
             }
             return list;
+        }
+
+        public UserModel isExits(string jobNumber)
+        {
+            string sql = "select select t.JOB_NUMBER,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.creator,t.create_time,t.UPDATER,t.UPDATE_TIME,t.USER_STATUS from H_USER t where t.job_number=:jobNumber";
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("jobNumber",jobNumber)
+            };
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql, parameters);
+            UserModel user = new UserModel();
+            while (reader.Read())
+            {
+                user.jobNumber = reader["JOB_NUMBER"].ToString();
+                user.name = reader["NAME"].ToString();
+                user.role = reader["ROLE"].ToString();
+                user.nameEn = reader["NAME_EN"].ToString();
+                user.loginFlag = reader["LOGIN_FLAG"].ToString();
+                user.updater = reader["UPDATER"].ToString();
+                user.updaterTime = reader["UPDATE_TIME"].ToString();
+                user.creator = reader["creator"].ToString();
+                user.createTime = reader["create_time"].ToString();
+                user.userStatus = reader["user_status"].ToString();
+            }
+            return user;
         }
         
         /// <summary>

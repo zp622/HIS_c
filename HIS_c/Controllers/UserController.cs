@@ -81,5 +81,16 @@ namespace HIS_c.Controllers
         {
             return userService.getAll();
         }
+
+        /// <summary>
+        /// 判断职工号知否存在，如果已经存在返回已有职工的信息
+        /// </summary>
+        /// <param name="jobNumber"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public ApiResult<UserModel> isExit(string jobNumber)
+        {
+            return userService.isExits(jobNumber);
+        }
     }
 }

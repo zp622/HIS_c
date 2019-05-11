@@ -23,7 +23,7 @@ namespace HIS_c.Models
         // 创建者
         public String creator { get; set; }
         // 创建时间
-        public String createTame { get; set; }
+        public String createTime { get; set; }
         // 更新者
         public String updater { get; set; }
         // 更新时间

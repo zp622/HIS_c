@@ -104,5 +104,24 @@ namespace HIS_c.Service
             apiResult.data = userDao.getAllUser();
             return apiResult;
         }
+
+        public ApiResult<UserModel> isExits(string jobNumber)
+        {
+            UserModel user = userDao.isExits(jobNumber);
+            ApiResult<UserModel> apiResult = new ApiResult<UserModel>();
+            if (user == null)
+            {
+                apiResult.code = 200;
+                apiResult.message = "职工号合法";
+                apiResult.data = null;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "职工号已经存在";
+                apiResult.data = user;
+            }
+            return apiResult;
+        }
     }
 }
