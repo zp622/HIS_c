@@ -1,5 +1,6 @@
 ﻿using HIS_c.Models;
 using HIS_c.Service;
+using HIS_c.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -136,5 +137,6 @@ namespace HIS_c.Controllers
         {
             return userService.SendEmail(mailTo);
         }
+
     }
 }
