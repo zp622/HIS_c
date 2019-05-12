@@ -34,9 +34,9 @@ namespace HIS_c.Controllers
         /// <param name="jobNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<UserModel> exitLogin([FromBody]string jobNumber)
+        public ApiResult<UserModel> exitLogin([FromBody]UserModel user)
         {
-            return userService.exitLogin(jobNumber);
+            return userService.exitLogin(user.jobNumber);
         }
 
         /// <summary>
@@ -56,9 +56,9 @@ namespace HIS_c.Controllers
         /// <param name="jobNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<UserModel>> delUser([FromBody] string jobNumber)
+        public ApiResult<List<UserModel>> delUser([FromBody]UserModel user)
         {
-            return userService.delUser(jobNumber);
+            return userService.delUser(user.jobNumber);
         }
 
         /// <summary>
@@ -88,9 +88,9 @@ namespace HIS_c.Controllers
         /// <param name="jobNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<UserModel> isExit([FromBody]string jobNumber)
+        public ApiResult<UserModel> isExit([FromBody]UserModel user)
         {
-            return userService.isExits(jobNumber);
+            return userService.isExits(user.jobNumber);
         }
 
         /// <summary>
