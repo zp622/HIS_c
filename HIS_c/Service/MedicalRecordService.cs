@@ -1,26 +1,26 @@
-﻿using HIS_c.Dao;
-using HIS_c.Models;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using HIS_c.Models;
+using HIS_c.Dao;
 
 namespace HIS_c.Service
 {
-    public class PatientService
+    public class MedicalRecordService
     {
-        private PatientDao patientDao = new PatientDao();
+        private MedicalRecordDao recordDao = new MedicalRecordDao();
 
-        private ApiResult<List<Patient>> apiResult = new ApiResult<List<Patient>>();
+        private ApiResult<List<MedicalRecord>> apiResult = new ApiResult<List<MedicalRecord>>();
 
-        public ApiResult<List<Patient>> addPatient(Patient patient)
+        public ApiResult<List<MedicalRecord>> addRecord(MedicalRecord record)
         {
             
-            if (patientDao.addPatient(patient) == 1)
+            if (recordDao.addRecord(record) == 1)
             {
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
-                apiResult.data = patientDao.getAll();
+                apiResult.data = recordDao.getAll();
             }
             else
             {
@@ -30,11 +30,11 @@ namespace HIS_c.Service
             return apiResult;
         }
 
-        public ApiResult<List<Patient>> getAll()
+        public ApiResult<List<MedicalRecord>> getAll()
         {
             apiResult.code = 200;
             apiResult.message = "查询成功";
-            apiResult.data = patientDao.getAll();
+            apiResult.data = recordDao.getAll();
             return apiResult;
         }
     }

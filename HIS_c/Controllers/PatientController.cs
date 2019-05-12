@@ -19,9 +19,15 @@ namespace HIS_c.Controllers
         /// <param name="patient"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<Patient> addPatient(Patient patient)
+        public ApiResult<List<Patient>> addPatient(Patient patient)
         {
             return patientService.addPatient(patient);
+        }
+
+        [HttpPost]
+        public ApiResult<List<Patient>> getAll()
+        {
+            return patientService.getAll();
         }
     }
 }
