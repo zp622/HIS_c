@@ -19,7 +19,7 @@ namespace HIS_c.Controllers
         /// <param name="member"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<Member>> addMember(Member member)
+        public ApiResult<List<Member>> addMember([FromBody]Member member)
         {
             return memberService.addMenber(member);
         }
@@ -40,7 +40,7 @@ namespace HIS_c.Controllers
         /// <param name="member"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<Member>> updMember(Member member)
+        public ApiResult<List<Member>> updMember([FromBody]Member member)
         {
             return memberService.updMember(member);
         }

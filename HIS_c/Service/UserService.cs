@@ -7,6 +7,7 @@ using System.Net.Mail;
 using System.Security.Cryptography;
 using System.Text;
 using System.Web;
+using System.Web.Caching;
 
 namespace HIS_c.Service
 {
@@ -25,6 +26,12 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "登录成功";
                 apiResult.data = user;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "登录失败";
+                apiResult.data = null;
             }
             return apiResult;
         }
@@ -236,34 +243,44 @@ namespace HIS_c.Service
 
         /// <returns>返回发送邮箱的结果</returns>
 
-        public static bool SendEmail(string mailTo, string mailSubject, string mailContent)
+        public ApiResult<Boolean> SendEmail(string mailTo)
 
         {
             // 设置发送方的邮件信息,例如使用网易的smtp
-            string smtpServer = "smtp.163.com"; //SMTP服务器
-            string mailFrom = "XXX@163.com"; //登陆用户名
-            string userPassword = "XXX";//登陆密码
+            string smtpServer = "smtp.qq.com"; //SMTP服务器
+            string mailFrom = "1054632915@qq.com"; //登陆用户名
+            string userPassword = "rifcbfzgcmnzbaif";//登陆密码
             // 邮件服务设置
             SmtpClient smtpClient = new SmtpClient();
+            Random rd = new Random();
+            string code = rd.Next(100000, 999999).ToString();
+            Cache cache = new Cache();
+            cache.Add(mailTo, code,null, DateTime.Now.AddSeconds(60*10),TimeSpan.Zero,CacheItemPriority.Normal,null);
             smtpClient.DeliveryMethod = SmtpDeliveryMethod.Network;//指定电子邮件发送方式
             smtpClient.Host = smtpServer; //指定SMTP服务器
             smtpClient.Credentials = new System.Net.NetworkCredential(mailFrom, userPassword);//用户名和密码
             // 发送邮件设置       
             MailMessage mailMessage = new MailMessage(mailFrom, mailTo); // 发送人和收件人
-            mailMessage.Subject = mailSubject;//主题
-            mailMessage.Body = mailContent;//内容
+            mailMessage.Subject = "验证码";//主题
+            mailMessage.Body = "验证码"+ code +",10分钟内有效，如非本人操作请忽略。";//内容
             mailMessage.BodyEncoding = Encoding.UTF8;//正文编码
             mailMessage.IsBodyHtml = true;//设置为HTML格式
             mailMessage.Priority = MailPriority.Low;//优先级
+            ApiResult<Boolean> apiResult = new ApiResult<Boolean>();
             try
             {
                 smtpClient.Send(mailMessage); // 发送邮件
-                return true;
+                apiResult.code = 200;
+                apiResult.message = cache.Get(mailTo).ToString();
+                apiResult.data = true;
             }
             catch (SmtpException ex)
             {
-                return false;
+                apiResult.code = 199;
+                apiResult.message = "邮件发送失败";
+                apiResult.data = false;
             }
+            return apiResult;
         }
     }
 }

@@ -102,7 +102,7 @@ namespace HIS_c.Dao
             string sql = "update his.h_user set ";
             if (isNotBlank(user.password))
             {
-                sql = sql + "password = '" + MD5Encrypt32(user.password) + "',";
+                sql = sql + "password = '" + user.password + "',";
             }
             if (isNotBlank(user.userStatus))
             {

@@ -125,5 +125,16 @@ namespace HIS_c.Controllers
         {
             return userService.validatePwd(user.jobNumber, user.password);
         }
+
+        /// <summary>
+        /// 发送邮箱验证码，成功返回六位验证码
+        /// </summary>
+        /// <param name="mailTo"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<Boolean> sendEmail(string mailTo)
+        {
+            return userService.SendEmail(mailTo);
+        }
     }
 }
