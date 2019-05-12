@@ -34,7 +34,7 @@ namespace HIS_c.Controllers
         /// <param name="jobNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<UserModel> exitLogin(string jobNumber)
+        public ApiResult<UserModel> exitLogin([FromBody]string jobNumber)
         {
             return userService.exitLogin(jobNumber);
         }
@@ -56,7 +56,7 @@ namespace HIS_c.Controllers
         /// <param name="jobNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<UserModel>> delUser(string jobNumber)
+        public ApiResult<List<UserModel>> delUser([FromBody] string jobNumber)
         {
             return userService.delUser(jobNumber);
         }
@@ -67,7 +67,7 @@ namespace HIS_c.Controllers
         /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<UserModel>> updUser(UserModel user)
+        public ApiResult<List<UserModel>> updUser([FromBody]UserModel user)
         {
             return userService.updUser(user);
         }
@@ -88,7 +88,7 @@ namespace HIS_c.Controllers
         /// <param name="jobNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<UserModel> isExit(string jobNumber)
+        public ApiResult<UserModel> isExit([FromBody]string jobNumber)
         {
             return userService.isExits(jobNumber);
         }
@@ -96,27 +96,34 @@ namespace HIS_c.Controllers
         /// <summary>
         /// 多字段模糊查询
         /// </summary>
-        /// <param name="jobNumber">职工号</param>
-        /// <param name="name">姓名</param>
-        /// <param name="role">角色</param>
+        /// <param name="user"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<UserModel>> search(string jobNumber,string name,string role)
+        public ApiResult<List<UserModel>> search([FromBody]UserModel user)
         {
-            return userService.search(jobNumber, name, role);
+            return userService.search(user.jobNumber, user.name, user.role);
         }
 
         /// <summary>
         /// 修改用户密码
         /// </summary>
-        /// <param name="jobNumber"></param>
-        /// <param name="oldPwd"></param>
-        /// <param name="newPwd"></param>
+        /// <param name="user">前台传参为jobNumber和password</param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<UserModel> updPwd(string jobNumber,string oldPwd,string newPwd)
+        public ApiResult<UserModel> updPwd([FromBody]UserModel user)
         {
-            return userService.updPwd(jobNumber, oldPwd, newPwd);
+            return userService.updPwd(user.jobNumber,user.password);
+        }
+
+        /// <summary>
+        /// 校验旧密码
+        /// </summary>
+        /// <param name="user">前台传参为jobNumber和password</param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<Boolean> validatePwd([FromBody]UserModel user)
+        {
+            return userService.validatePwd(user.jobNumber, user.password);
         }
     }
 }

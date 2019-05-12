@@ -236,6 +236,7 @@ namespace HIS_c.Dao
                 userModel.loginFlag = reader["LOGIN_FLAG"].ToString();
                 userModel.updater = reader["UPDATER"].ToString();
                 userModel.updaterTime = reader["UPDATE_TIME"].ToString();
+                userModel.password = reader["password"].ToString();
                 list.Add(userModel);
             }
             if(list.Count>0){

@@ -150,34 +150,25 @@ namespace HIS_c.Service
             return apiResult;
         }
 
-        public ApiResult<UserModel> updPwd(string jobNumber,string oldPwd,string newPwd)
+        public ApiResult<UserModel> updPwd(string jobNumber,string newPwd)
         {
             UserModel user = userDao.getUserByNum(jobNumber);
             ApiResult<UserModel> apiResult = new ApiResult<UserModel>();
             if (user != null)
             {
-                if (MD5Encrypt32(oldPwd).Equals(user.password))
+                UserModel newUser = new UserModel();
+                newUser.jobNumber = jobNumber;
+                newUser.password = MD5Encrypt32(newPwd);
+                if (userDao.updUser(newUser)==1)
                 {
-                    UserModel newUser = new UserModel();
-                    newUser.jobNumber = jobNumber;
-                    newUser.password = MD5Encrypt32(newPwd);
-                    if (userDao.updUser(newUser)==1)
-                    {
-                        apiResult.code = 200;
-                        apiResult.message = "修改密码成功";
-                        apiResult.data = userDao.getUserByNum(jobNumber);
-                    }
-                    else
-                    {
-                        apiResult.code = 199;
-                        apiResult.message = "修改密码失败";
-                        apiResult.data = null;
-                    }
+                    apiResult.code = 200;
+                    apiResult.message = "修改密码成功";
+                    apiResult.data = userDao.getUserByNum(jobNumber);
                 }
                 else
                 {
                     apiResult.code = 199;
-                    apiResult.message = "原密码错误";
+                    apiResult.message = "修改密码失败";
                     apiResult.data = null;
                 }
             }
@@ -186,6 +177,25 @@ namespace HIS_c.Service
                 apiResult.code = 199;
                 apiResult.message = "用户不存在";
                 apiResult.data = null;
+            }
+            return apiResult;
+        }
+
+        public ApiResult<Boolean> validatePwd(string jobNumber, string oldPwd)
+        {
+            ApiResult<Boolean> apiResult = new ApiResult<Boolean>();
+            UserModel user = userDao.getUserByNum(jobNumber);
+            if (MD5Encrypt32(oldPwd).Equals(user.password))
+            {
+                apiResult.code = 200;
+                apiResult.message = "旧密码验证通过";
+                apiResult.data = true;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "旧密码验证失败";
+                apiResult.data = false;
             }
             return apiResult;
         }
