@@ -1,6 +1,7 @@
 ﻿using HIS_c.Models;
 using HIS_c.Service;
 using HIS_c.Utils;
+using Newtonsoft.Json.Linq;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -78,9 +79,12 @@ namespace HIS_c.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<UserModel>> getAll()
+        public ApiResult<List<UserModel>> getAll([FromBody]JObject obj)
         {
-            return userService.getAll();
+            UserModel user = obj["user"].ToObject<UserModel>();
+            int currentPage = obj["currentPage"].ToObject<Int32>();
+            int pageSize = obj["pageSize"].ToObject<Int32>();
+            return userService.getAll(user,currentPage,pageSize);
         }
 
         /// <summary>

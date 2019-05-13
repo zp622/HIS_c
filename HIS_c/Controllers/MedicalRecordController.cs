@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HIS_c.Service;
 using HIS_c.Models;
+using Newtonsoft.Json.Linq;
 
 namespace HIS_c.Controllers
 {
@@ -19,10 +20,18 @@ namespace HIS_c.Controllers
             return recordService.addRecord(record);
         }
 
+        /// <summary>
+        /// 获取病历信息
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<MedicalRecord>> getAll()
+        public ApiResult<List<MedicalRecord>> getRecord([FromBody]JObject obj)
         {
-            return recordService.getAll();
+            MedicalRecord record = obj["medicalRecord"].ToObject<MedicalRecord>();
+            int currentPage = obj["currentPage"].ToObject<Int32>();
+            int pageSize = obj["pageSize"].ToObject<Int32>();
+            return recordService.getAll(record,currentPage,pageSize);
         }
     }
 }

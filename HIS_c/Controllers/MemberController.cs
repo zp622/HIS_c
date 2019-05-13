@@ -6,6 +6,7 @@ using System.Net.Http;
 using System.Web.Http;
 using HIS_c.Models;
 using HIS_c.Service;
+using Newtonsoft.Json.Linq;
 
 namespace HIS_c.Controllers
 {
@@ -29,9 +30,12 @@ namespace HIS_c.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<Member>> getAll()
+        public ApiResult<List<Member>> getAll([FromBody]JObject obj)
         {
-            return memberService.getAll();
+            Member member = obj["member"].ToObject<Member>();
+            int currentPage = obj["currentPage"].ToObject<Int32>();
+            int pageSize = obj["pageSize"].ToObject<Int32>();
+            return memberService.getAll(member,currentPage,pageSize);
         }
 
         /// <summary>

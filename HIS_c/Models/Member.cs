@@ -35,6 +35,8 @@ namespace HIS_c.Models
         public string workTerm { get; set; }
         //学历
         public string degree { get; set; }
+
+        public string belongDept { get; set; }
         
         public string creator { get; set; }
 

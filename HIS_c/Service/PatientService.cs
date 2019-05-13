@@ -20,7 +20,7 @@ namespace HIS_c.Service
             {
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
-                apiResult.data = patientDao.getAll();
+                apiResult.data = patientDao.getAll(null,1,10);
             }
             else
             {
@@ -30,11 +30,11 @@ namespace HIS_c.Service
             return apiResult;
         }
 
-        public ApiResult<List<Patient>> getAll()
+        public ApiResult<List<Patient>> getAll(Patient patient, int currentPage, int pageSize)
         {
             apiResult.code = 200;
             apiResult.message = "查询成功";
-            apiResult.data = patientDao.getAll();
+            apiResult.data = patientDao.getAll(patient,currentPage,pageSize);
             return apiResult;
         }
     }

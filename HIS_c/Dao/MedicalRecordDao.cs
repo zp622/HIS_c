@@ -18,7 +18,7 @@ namespace HIS_c.Dao
             string recordNo = DateTime.Now.ToString("yyyyMMddHHmmssms") + rd.Next().ToString();
             OracleParameter[] parameters =
             {
-                new OracleParameter("record_no",recordNo),
+                new OracleParameter("record_no",record.patientNo),
                 new OracleParameter("register_no",record.registerNo),
                 new OracleParameter("patient_name",record.patientName),
                 new OracleParameter("patient_no",record.patientNo),
@@ -38,11 +38,34 @@ namespace HIS_c.Dao
             return OracleHelper.ExecuteSql(sql, parameters);
         }
 
-        public List<MedicalRecord> getAll()
+        public List<MedicalRecord> getAll(MedicalRecord obj,int currentPage,int pageSize)
         {
+            string front = "select * from (select a.*,rownum rn from (";
             string sql = "select t.record_no,t.register_no,t.patient_name,t.patient_no,t.hospital,t.department,t.visit_time,t.doctor,t.chief_action," +
-                "t.present_illness,t.history_illness,t.phy_exam,t.tent_diag,t.trpl,t.auxi_exam,t.creator,t.create_time,t.updater,t.update_time from B_MEDICAL_RECORD t";
-            OracleDataReader reader = OracleHelper.ExecuteReader(sql);
+                "t.present_illness,t.history_illness,t.phy_exam,t.tent_diag,t.trpl,t.auxi_exam,t.creator,t.create_time,t.updater,t.update_time " +
+                "from B_MEDICAL_RECORD t where 1=1 ";
+            if (obj != null)
+            {
+                if (isNotBlank(obj.registerNo)){
+                    sql = sql + " and register_no = " + obj.registerNo;
+                }
+                if (isNotBlank(obj.patientNo))
+                {
+                    sql = sql + " and patient_no = " + obj.patientNo;
+                }
+                if (isNotBlank(obj.patientName))
+                {
+                    sql = sql + " and patient_name = " + obj.patientName;
+                }
+            }
+            string back = ") a where rownum<=:max) where rn>=:min";
+            sql = front + sql + back;
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("min",pageSize*(currentPage-1)+1),
+                new OracleParameter("max",pageSize*currentPage)
+            };
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql,parameters);
             List<MedicalRecord> list = new List<MedicalRecord>();
             while (reader.Read())
             {
@@ -69,6 +92,18 @@ namespace HIS_c.Dao
                 list.Add(record);
             }
             return list;
+        }
+
+        public static bool isNotBlank(string str)
+        {
+            if (str != null && str.Length != 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

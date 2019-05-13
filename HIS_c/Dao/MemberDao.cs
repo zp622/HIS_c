@@ -39,12 +39,37 @@ namespace HIS_c.Dao
             return OracleHelper.ExecuteSql(sql, parameters);
         }
 
-        public List<Member> getAll()
+        public List<Member> getAll(Member obj,int currentPage,int pageSize)
         {
-            string sql = "select t.job_number,t.id,t.name,t.sex,t.famous,t.birthday,t.title_rank,t.career_experience,t.address,t.email,t.phone,t.work_date,t.work_term,t.degree,t.creator,t.create_time,t.updater,t.update_time from his.h_member t";
+            string front = "select * from (select a.*,rownum rn from (";
+            string sql = "select t.job_number,t.id,t.name,t.sex,t.famous,t.birthday,t.title_rank,t.career_experience,t.address,t.email,t.phone,t.work_date,t.work_term,t.degree,t.belong_dept,t.creator,t.create_time,t.updater,t.update_time from his.h_member t where 1=1";
+            if (obj != null)
+            {
+                if (isNotBlank(obj.jobNumber)){
+                    sql = sql + " and job_number = " + obj.jobNumber;
+                }
+                if (isNotBlank(obj.name))
+                {
+                    sql = sql + " and name like '%" + obj.name + "%'";
+                 }
+                if (isNotBlank(obj.titleRank))
+                {
+                    sql = sql + " and title_rank = " + obj.titleRank;
+                }
+                if (isNotBlank(obj.belongDept))
+                {
+                    sql = sql + " and belong_dept = " + obj.belongDept;
+                }
+            }
+            string back = ") a where rownum<=:max) where rn>=:min";
+            sql = front + sql + back;
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("min",pageSize*(currentPage-1)+1),
+                new OracleParameter("max",pageSize*currentPage)
+            };
             List<Member> list = new List<Member>();
-            
-            OracleDataReader reader = OracleHelper.ExecuteReader(sql);
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql,parameters);
             while (reader.Read())
             {
                 Member member = new Member();
@@ -62,6 +87,7 @@ namespace HIS_c.Dao
                 member.workDate = reader["work_date"].ToString();
                 member.workTerm = reader["work_term"].ToString();
                 member.degree = reader["degree"].ToString();
+                member.belongDept = reader["belong_dept"].ToString();
                 member.creator = reader["creator"].ToString();
                 if (reader["create_time"] != DBNull.Value)
                 {
@@ -131,6 +157,10 @@ namespace HIS_c.Dao
             if (isNotBlank(member.degree))
             {
                 sql = sql + "degree = '" + member.degree + "',";
+            }
+            if (isNotBlank(member.belongDept))
+            {
+                sql = sql + "belong_dept = '" + member.belongDept + "',";
             }
             if (isNotBlank(member.updater))
             {

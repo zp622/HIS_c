@@ -24,10 +24,17 @@ namespace HIS_c.Controllers
             return patientService.addPatient(patient);
         }
 
+        /// <summary>
+        /// 查询患者信息
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <param name="currentPage"></param>
+        /// <param name="pageSize"></param>
+        /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<Patient>> getAll()
+        public ApiResult<List<Patient>> getAll(Patient patient, int currentPage, int pageSize)
         {
-            return patientService.getAll();
+            return patientService.getAll(patient,currentPage,pageSize);
         }
     }
 }

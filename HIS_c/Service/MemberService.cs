@@ -20,7 +20,7 @@ namespace HIS_c.Service
             {
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
-                apiResult.data = memberDao.getAll();
+                apiResult.data = memberDao.getAll(null,1,10);
             }
             else
             {
@@ -31,11 +31,11 @@ namespace HIS_c.Service
             return apiResult;
         }
 
-        public ApiResult<List<Member>> getAll()
+        public ApiResult<List<Member>> getAll(Member member, int currentPage, int pageSize)
         {
             apiResult.code = 200;
             apiResult.message = "查询成功";
-            apiResult.data = memberDao.getAll();
+            apiResult.data = memberDao.getAll(member,currentPage,pageSize);
             return apiResult;
         }
 
@@ -47,7 +47,7 @@ namespace HIS_c.Service
             {
                 apiResult.code = 200;
                 apiResult.message = "修改成功";
-                apiResult.data = memberDao.getAll();
+                apiResult.data = memberDao.getAll(null,1,10);
             }
             else if (i == -1)
             {

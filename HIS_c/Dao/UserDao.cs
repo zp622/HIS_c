@@ -136,10 +136,33 @@ namespace HIS_c.Dao
             return OracleHelper.ExecuteSql(sql);
         }
 
-        public List<UserModel> getAllUser()
+        public List<UserModel> getUser(UserModel user,int currentPage,int pageSize)
         {
-            string sql = "select t.JOB_NUMBER,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.creator,t.create_time,t.UPDATER,t.UPDATE_TIME,t.USER_STATUS from H_USER t";
-            OracleDataReader reader = OracleHelper.ExecuteReader(sql);
+            string front = "select * from (select a.*,rownum rn from (";
+            string sql = "select t.JOB_NUMBER,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.creator,t.create_time,t.UPDATER,t.UPDATE_TIME,t.USER_STATUS from H_USER t where 1=1 ";
+            if (user != null)
+            {
+                if (isNotBlank(user.jobNumber))
+                {
+                    sql = sql + "and t.job_number like '%" + user.jobNumber + "%' ";
+                }
+                if (isNotBlank(user.name))
+                {
+                    sql = sql + "and t.name like '%" + user.name + "%' ";
+                }
+                if (isNotBlank(user.role))
+                {
+                    sql = sql + "and t.role = '" + user.role + "'";
+                }
+            }
+            string back = ") a where rownum<=:max) where rn>=:min";
+            sql = front + sql + back;
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("min",pageSize*(currentPage-1)+1),
+                new OracleParameter("max",pageSize*currentPage)
+            };
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql,parameters);
             List<UserModel> list = new List<UserModel>();
             while (reader.Read())
             {

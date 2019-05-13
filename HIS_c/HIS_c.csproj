@@ -176,6 +176,7 @@
     <Compile Include="Controllers\PatientController.cs" />
     <Compile Include="Controllers\UserController.cs" />
     <Compile Include="Controllers\ValuesController.cs" />
+    <Compile Include="Dao\BookingFromDao.cs" />
     <Compile Include="Dao\MedicalRecordDao.cs" />
     <Compile Include="Dao\MemberDao.cs" />
     <Compile Include="Dao\PatientDao.cs" />
@@ -185,6 +186,8 @@
     </Compile>
     <Compile Include="Models\ApiResult.cs" />
     <Compile Include="Models\ApiResultModel.cs" />
+    <Compile Include="Models\BookingForm.cs" />
+    <Compile Include="Models\Department.cs" />
     <Compile Include="Models\MedicalRecord.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Models\Patient.cs" />

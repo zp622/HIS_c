@@ -70,7 +70,7 @@ namespace HIS_c.Service
             {
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
-                apiResult.data = userDao.getAllUser();
+                apiResult.data = userDao.getUser(null,1,10);
             }
             else{
                 apiResult.code = 199;
@@ -87,7 +87,7 @@ namespace HIS_c.Service
             {
                 apiResult.code = 200;
                 apiResult.message = "删除成功";
-                apiResult.data = userDao.getAllUser();
+                apiResult.data = userDao.getUser(null,1,10);
             }
             else
             {
@@ -106,7 +106,7 @@ namespace HIS_c.Service
             {
                 apiResult.code = 200;
                 apiResult.message = "修改成功";
-                apiResult.data = userDao.getAllUser();
+                apiResult.data = userDao.getUser(null,1,10);
             }
             else if (i == -1)
             {
@@ -123,11 +123,11 @@ namespace HIS_c.Service
             return apiResult;
         }
 
-        public ApiResult<List<UserModel>> getAll()
+        public ApiResult<List<UserModel>> getAll(UserModel user, int currentPage, int pageSize)
         {
             apiResult.code = 200;
             apiResult.message = "查询成功";
-            apiResult.data = userDao.getAllUser();
+            apiResult.data = userDao.getUser(user,currentPage,pageSize);
             return apiResult;
         }
 
