@@ -22,7 +22,7 @@ namespace HIS_c.Dao
                 new OracleParameter("register_type",form.registerType),
                 new OracleParameter("register_dept",form.registerDept),
                 new OracleParameter("waiting_no",form.waitingNo),
-                new OracleParameter("creator",form.creator),
+                new OracleParameter("creator",form.creator!=null?form.creator:""),
                 new OracleParameter("patient_name",form.patientName),
                 new OracleParameter("doctor",form.doctor),
                 new OracleParameter("address",form.address),
@@ -40,17 +40,22 @@ namespace HIS_c.Dao
             {
                 if (isNotBlank(form.registerTime))
                 {
-                    sql = sql + " and t.register_time = " + form.registerTime;
+                    sql = sql + " and t.register_time = '" + form.registerTime + "'";
                 }
                 if (isNotBlank(form.status))
                 {
-                    sql = sql + " and t.status = " + form.status;
+                    sql = sql + " and t.status = '" + form.status + "'";
                 }
                 if (isNotBlank(form.doctor))
                 {
-                    sql = sql + " and t.doctor = " + form.doctor;
+                    sql = sql + " and t.doctor = '" + form.doctor + "'";
+                }
+                if (isNotBlank(form.patientNo))
+                {
+                    sql = sql + " and t.patient_no = '" + form.patientNo + "'";
                 }
             }
+            sql = sql + " order by register_no desc";
             string back = ") a where rownum<=:max) where rn>=:min";
             sql = front + sql + back;
             OracleParameter[] parameters =
@@ -82,6 +87,26 @@ namespace HIS_c.Dao
             }
             return list;
         }
+
+        public int getCount(BookingForm form)
+        {
+            string sql = "select * from his.b_bookingform t where t.register_dept = :register_dept and t.doctor = :doctor and t.register_time like '%"+form.registerTime+"%'";
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("register_dept",form.registerDept),
+                new OracleParameter("doctor",form.doctor),
+            };
+            OracleDataReader reader = OracleHelper.ExecuteReader(sql, parameters);
+            List<BookingForm> list = new List<BookingForm>();
+            while (reader.Read())
+            {
+                BookingForm bookingForm = new BookingForm();
+                bookingForm.registerNo = reader["register_no"].ToString();
+                list.Add(bookingForm);
+            }
+            return list.Count;
+        }
+
         public static bool isNotBlank(string str)
         {
             if (str != null && str.Length != 0)

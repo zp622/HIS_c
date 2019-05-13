@@ -87,7 +87,7 @@ namespace HIS_c.Dao
                 result.updater = reader["updater"].ToString();
                 result.updateTime = reader["update_time"].ToString();
                 result.famous = reader["famous"].ToString();
-                list.Add(patient);
+                list.Add(result);
             }
             return list;
         }
