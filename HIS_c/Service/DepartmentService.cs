@@ -20,6 +20,7 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
                 apiResult.data = departmentDao.getDept(null, 1, 10);
+                apiResult.total = departmentDao.getDept(null, 1, 1000000).Count;
             }
             else
             {
@@ -35,6 +36,7 @@ namespace HIS_c.Service
             apiResult.code = 200;
             apiResult.message = "查询成功";
             apiResult.data = departmentDao.getDept(dept, currentPage, pageSize);
+            apiResult.total = departmentDao.getDept(dept, 1, 1000000).Count;
             return apiResult;
         }
     }

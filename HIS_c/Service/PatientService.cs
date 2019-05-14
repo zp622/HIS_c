@@ -21,6 +21,7 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
                 apiResult.data = patientDao.getAll(null,1,10);
+                apiResult.total = patientDao.getAll(null, 1, 1000000).Count;
             }
             else
             {
@@ -35,6 +36,7 @@ namespace HIS_c.Service
             apiResult.code = 200;
             apiResult.message = "查询成功";
             apiResult.data = patientDao.getAll(patient,currentPage,pageSize);
+            apiResult.total = patientDao.getAll(patient, 1, 1000000).Count;
             return apiResult;
         }
     }

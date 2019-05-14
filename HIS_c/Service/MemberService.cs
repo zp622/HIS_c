@@ -21,6 +21,7 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
                 apiResult.data = memberDao.getAll(null,1,10);
+                apiResult.total = memberDao.getAll(null, 1, 1000000).Count;
             }
             else
             {
@@ -36,6 +37,7 @@ namespace HIS_c.Service
             apiResult.code = 200;
             apiResult.message = "查询成功";
             apiResult.data = memberDao.getAll(member,currentPage,pageSize);
+            apiResult.total = memberDao.getAll(member, 1, 1000000).Count;
             return apiResult;
         }
 
@@ -48,6 +50,7 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "修改成功";
                 apiResult.data = memberDao.getAll(null,1,10);
+                apiResult.total = memberDao.getAll(null, 1, 1000000).Count;
             }
             else if (i == -1)
             {

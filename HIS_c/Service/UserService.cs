@@ -71,6 +71,7 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
                 apiResult.data = userDao.getUser(null,1,10);
+                apiResult.total = userDao.getUser(null, 1, 1000000).Count;
             }
             else{
                 apiResult.code = 199;
@@ -88,6 +89,7 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "删除成功";
                 apiResult.data = userDao.getUser(null,1,10);
+                apiResult.total = userDao.getUser(null, 1, 1000000).Count;
             }
             else
             {
@@ -107,6 +109,7 @@ namespace HIS_c.Service
                 apiResult.code = 200;
                 apiResult.message = "修改成功";
                 apiResult.data = userDao.getUser(null,1,10);
+                apiResult.total = userDao.getUser(null, 1, 1000000).Count;
             }
             else if (i == -1)
             {
@@ -128,6 +131,7 @@ namespace HIS_c.Service
             apiResult.code = 200;
             apiResult.message = "查询成功";
             apiResult.data = userDao.getUser(user,currentPage,pageSize);
+            apiResult.total = userDao.getUser(user, 1, 1000000).Count;
             return apiResult;
         }
 

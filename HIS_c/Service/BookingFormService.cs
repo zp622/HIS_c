@@ -20,6 +20,7 @@ namespace HIS_c.Service
             apiResult.code = 200;
             apiResult.message = "查询成功";
             apiResult.data = bookingFromDao.getBookingForms(form, currentPage, pageSize);
+            apiResult.total = bookingFromDao.getBookingForms(form, 1, 1000000).Count;
             return apiResult;
         }
 
