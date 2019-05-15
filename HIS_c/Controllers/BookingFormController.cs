@@ -38,5 +38,17 @@ namespace HIS_c.Controllers
         {
             return bookingFormService.addBookingForm(form);
         }
+
+        /// <summary>
+        /// 查询剩余挂号数  挂号数上限为每半天20个
+        /// </summary>
+        /// <param name="obj"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<int> queryHasCount([FromBody]JObject obj)
+        {
+            BookingForm form = obj["bookingForm"].ToObject<BookingForm>();
+            return bookingFormService.queryBookFormCount(form);
+        }
     }
 }

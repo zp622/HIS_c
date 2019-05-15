@@ -5,6 +5,7 @@ using System.Web;
 using HIS_c.Models;
 using HIS_c.Utils;
 using System.Data.OracleClient;
+using System.Text;
 
 namespace HIS_c.Dao
 {
@@ -105,6 +106,43 @@ namespace HIS_c.Dao
                 list.Add(bookingForm);
             }
             return list.Count;
+        }
+
+        /// <summary>
+        /// @autor zp
+        /// 获取已挂号数量
+        /// </summary>
+        /// <param name="str">科室 医生 日期 挂号类别</param>
+        /// <returns></returns>
+        public int getHasCount(BookingForm form)
+        {
+            StringBuilder sql = new StringBuilder("select t.* from his.b_bookingform t where 1=1");
+            if (isNotBlank(form.registerDept))
+            {
+                sql.Append(" and t.register_dept = '" + form.registerDept + "'");
+            }
+            if (isNotBlank(form.doctor))
+            {
+                sql.Append(" and t.doctor = '" + form.doctor + "'");
+            }
+            if (isNotBlank(form.registerTime))
+            {
+                sql.Append(" and t.register_time = '" + form.registerTime + "'");
+            }
+            if (isNotBlank(form.registerType))
+            {
+                sql.Append(" and t.register_type = '" + form.registerType + "'");
+            }
+            List<BookingForm> list = OracleHelper.ExecuteToList<BookingForm>(sql.ToString());
+            int count = 0;
+            if (list==null)
+            {
+                return count;
+            }
+            else
+            {
+                return list.Count; 
+            }
         }
 
         public static bool isNotBlank(string str)

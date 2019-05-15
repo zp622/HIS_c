@@ -41,15 +41,15 @@ namespace HIS_c.Dao
             {
                 if (isNotBlank(patient.cardType))
                 {
-                    sql = sql + " and card_type = " + patient.cardType;
+                    sql = sql + " and card_type = '" + patient.cardType + "'";
                 }
                 if (isNotBlank(patient.cardId))
                 {
-                    sql = sql + " and card_id = " + patient.cardId;
+                    sql = sql + " and card_id = '" + patient.cardId + "'";
                 }
                 if (isNotBlank(patient.patientNo))
                 {
-                    sql = sql + " and patient_no = " + patient.patientNo;
+                    sql = sql + " and patient_no = '" + patient.patientNo + "'";
                 }
                 if (isNotBlank(patient.name))
                 {
@@ -57,7 +57,7 @@ namespace HIS_c.Dao
                 }
                 if (isNotBlank(patient.phone))
                 {
-                    sql = sql + " and phone = " + patient.phone;
+                    sql = sql + " and phone = '" + patient.phone + "'";
                 }
             }
             string back = ") a where rownum<=:max) where rn>=:min";

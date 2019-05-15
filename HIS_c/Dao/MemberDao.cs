@@ -46,7 +46,7 @@ namespace HIS_c.Dao
             if (obj != null)
             {
                 if (isNotBlank(obj.jobNumber)){
-                    sql = sql + " and job_number = " + obj.jobNumber;
+                    sql = sql + " and job_number = '" + obj.jobNumber + "'";
                 }
                 if (isNotBlank(obj.name))
                 {
@@ -54,11 +54,11 @@ namespace HIS_c.Dao
                  }
                 if (isNotBlank(obj.titleRank))
                 {
-                    sql = sql + " and title_rank = " + obj.titleRank;
+                    sql = sql + " and title_rank = '" + obj.titleRank + "'";
                 }
                 if (isNotBlank(obj.belongDept))
                 {
-                    sql = sql + " and belong_dept = " + obj.belongDept;
+                    sql = sql + " and belong_dept = '" + obj.belongDept + "'";
                 }
             }
             string back = ") a where rownum<=:max) where rn>=:min";
