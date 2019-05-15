@@ -55,6 +55,18 @@ namespace HIS_c.Dao
                 {
                     sql = sql + " and t.patient_no = '" + form.patientNo + "'";
                 }
+                if (isNotBlank(form.registerDept))
+                {
+                    sql = sql + " and t.register_dept = '" + form.registerDept + "'";
+                }
+                if (isNotBlank(form.registerType))
+                {
+                    sql = sql + " and t.register_type = '" + form.registerType + "'";
+                }
+                if (isNotBlank(form.waitingNo))
+                {
+                    sql = sql + " and t.waiting_no = '" + form.waitingNo + "'";
+                }
             }
             sql = sql + " order by register_no desc";
             string back = ") a where rownum<=:max) where rn>=:min";
