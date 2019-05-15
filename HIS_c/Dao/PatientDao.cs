@@ -12,10 +12,12 @@ namespace HIS_c.Dao
     {
         public int addPatient(Patient patient)
         {
-            string sql = "insert into his.b_patient(card_type,card_id,name,sex,birthday,famous,phone,address,allergy_medicine,medical_record,creator)" +
-                "values(:patient_no,:card_type,:card_id,:name,:sex,:birthday,:famous,:phone,:address,:allergy_medicine,:medical_record,:creator)";
-            Random rd = new Random();
-            string patientNo = DateTime.Now.ToString("yyyyMMddHHmmssms") + rd.Next().ToString();
+            string sql = "insert into his.b_patient(card_type,card_id,name,sex,birthday,famous,phone,address,allergy_medicine,creator)" +
+                "values(:card_type,:card_id,:name,:sex,:birthday,:famous,:phone,:address,:allergy_medicine,:creator)";
+            //string sql = "insert into his.b_patient(card_type,card_id,name,sex,birthday,famous,phone,address,allergy_medicine,medical_record,creator)" +
+            //    "values(:patient_no,:card_type,:card_id,:name,:sex,:birthday,:famous,:phone,:address,:allergy_medicine,:medical_record,:creator)";
+            //Random rd = new Random();
+            //string patientNo = DateTime.Now.ToString("yyyyMMddHHmmssms") + rd.Next().ToString();
             OracleParameter[] parameters =
             {
                 new OracleParameter("card_type",patient.cardType),
@@ -27,7 +29,7 @@ namespace HIS_c.Dao
                 new OracleParameter("phone",patient.phone),
                 new OracleParameter("address",patient.address),
                 new OracleParameter("allergy_medicine",patient.allergyMedicine),
-                new OracleParameter("medical_record",patient.medicalRecord),
+                //new OracleParameter("medical_record",patient.medicalRecord),
                 new OracleParameter("creator",patient.creator),
             };
             return OracleHelper.ExecuteSql(sql, parameters);

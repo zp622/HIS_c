@@ -12,27 +12,29 @@ namespace HIS_c.Dao
     {
         public int addRecord(MedicalRecord record)
         {
-            string sql = "insert into his.B_MEDICAL_RECORD(record_no,register_no,patient_name,patient_no,hospital,department,doctor,chief_action,present_illness,history_illness,phy_exam,tent_diag,trpl,auxi_exam,creator)" +
-                "values(:record_no,:register_no,:patient_name,:patient_no,:hospital,:department,:doctor,:chief_action,:present_illness,:history_illness,:phy_exam,:tent_diag,:trpl,:auxi_exam,:creator)";
-            Random rd = new Random();
-            string recordNo = DateTime.Now.ToString("yyyyMMddHHmmssms") + rd.Next().ToString();
+            string sql = "insert into his.B_MEDICAL_RECORD(register_no,patient_no,creator)" +
+                "values(:register_no,:patient_no,:creator)";
+            //string sql = "insert into his.B_MEDICAL_RECORD(record_no,register_no,patient_name,patient_no,hospital,department,doctor,chief_action,present_illness,history_illness,phy_exam,tent_diag,trpl,auxi_exam,creator)" +
+            //    "values(:record_no,:register_no,:patient_name,:patient_no,:hospital,:department,:doctor,:chief_action,:present_illness,:history_illness,:phy_exam,:tent_diag,:trpl,:auxi_exam,:creator)";
+            //Random rd = new Random();
+            //string recordNo = DateTime.Now.ToString("yyyyMMddHHmmssms") + rd.Next().ToString();
             OracleParameter[] parameters =
             {
-                new OracleParameter("record_no",record.patientNo),
+                //new OracleParameter("record_no",record.patientNo),
                 new OracleParameter("register_no",record.registerNo),
-                new OracleParameter("patient_name",record.patientName),
+                //new OracleParameter("patient_name",record.patientName),
                 new OracleParameter("patient_no",record.patientNo),
-                new OracleParameter("hospital",record.hospital),
-                new OracleParameter("department",record.department),
+                //new OracleParameter("hospital",record.hospital),
+                //new OracleParameter("department",record.department),
                 //new OracleParameter("visit_time",record.visitTime),
-                new OracleParameter("doctor",record.doctor),
-                new OracleParameter("chief_action",record.chiefAction),
-                new OracleParameter("present_illness",record.presentIllness),
-                new OracleParameter("history_illness",record.historyIllness),
-                new OracleParameter("phy_exam",record.phyExam),
-                new OracleParameter("tent_diag",record.tentDiag),
-                new OracleParameter("trpl",record.trpl),
-                new OracleParameter("auxi_exam",record.auxiExam),
+                //new OracleParameter("doctor",record.doctor),
+                //new OracleParameter("chief_action",record.chiefAction),
+                //new OracleParameter("present_illness",record.presentIllness),
+                //new OracleParameter("history_illness",record.historyIllness),
+                //new OracleParameter("phy_exam",record.phyExam),
+               // new OracleParameter("tent_diag",record.tentDiag),
+                //new OracleParameter("trpl",record.trpl),
+                //new OracleParameter("auxi_exam",record.auxiExam),
                 new OracleParameter("creator",record.creator),
             };
             return OracleHelper.ExecuteSql(sql, parameters);
