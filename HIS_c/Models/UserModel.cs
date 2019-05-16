@@ -30,7 +30,11 @@ namespace HIS_c.Models
         public String updaterTime { get; set; }
         //用户状态
         public string userStatus { get; set; }
-        
+
+        public string belongDept { get; set; }
+
+        public string titleRank { get; set; }
+
         public UserModel() { }
     }
 }

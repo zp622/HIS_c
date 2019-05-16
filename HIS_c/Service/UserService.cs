@@ -15,6 +15,7 @@ namespace HIS_c.Service
     public class UserService
     {
         private UserDao userDao = new UserDao();
+       
         private ApiResult<List<UserModel>> apiResult = new ApiResult<List<UserModel>>();
 
         public ApiResult<List<UserModel>> userInfoGet(UserModel userInfo)

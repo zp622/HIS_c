@@ -16,7 +16,7 @@ namespace HIS_c.Dao
         public List<UserModel> getUserInfo(UserModel userInfo)
         {
             string MD5_PWD = MD5Encrypt32(userInfo.password);
-            String sql = "select t.JOB_NUMBER,t.PASSWORD,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.UPDATER,t.UPDATE_TIME from H_USER t where t.JOB_NUMBER = :jobNumber and t.PASSWORD = :password";
+            String sql = "select t.JOB_NUMBER,t.PASSWORD,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.UPDATER,t.UPDATE_TIME,t.TITLE_RANK,T.BELONG_DEPT from H_USER t where t.JOB_NUMBER = :jobNumber and t.PASSWORD = :password";
             List<UserModel> list = new List<UserModel>();
             OracleParameter[] parameters = {
                 new OracleParameter("jobNumber", userInfo.jobNumber),
@@ -33,6 +33,8 @@ namespace HIS_c.Dao
                 userModel.loginFlag = reader["LOGIN_FLAG"].ToString();
                 userModel.updater = reader["UPDATER"].ToString();
                 userModel.updaterTime = reader["UPDATE_TIME"].ToString();
+                userModel.titleRank = reader["TITLE_RANK"].ToString();
+                userModel.belongDept = reader["BELONG_DEPT"].ToString();
                 list.Add(userModel);
             }
             if (list != null && list.Count > 0)
