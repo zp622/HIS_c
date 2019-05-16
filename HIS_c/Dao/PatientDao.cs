@@ -94,6 +94,26 @@ namespace HIS_c.Dao
             return list;
         }
 
+        public int updPatient(Patient patient)
+        {
+            string sql = "update his.b_patient set name = :name, sex = :sex, " +
+                "famous = :famous, phone = :phone, address = :address, " +
+                "allergy_medicine = :allergy_medicine, updater = :updater where patient_no = :patient_no and card_id = :card_id";
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("name",patient.name),
+                new OracleParameter("sex",patient.sex),
+                new OracleParameter("famous",patient.famous),
+                new OracleParameter("phone",patient.phone),
+                new OracleParameter("address",patient.address),
+                new OracleParameter("allergy_medicine",patient.allergyMedicine),
+                new OracleParameter("updater",patient.updater),
+                new OracleParameter("patient_no",patient.patientNo),
+                new OracleParameter("card_id",patient.cardId)
+            };
+            return OracleHelper.ExecuteSql(sql, parameters);
+        }
+
         public static bool isNotBlank(string str)
         {
             if (str != null && str.Length != 0)

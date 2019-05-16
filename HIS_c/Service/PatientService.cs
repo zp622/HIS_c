@@ -39,5 +39,29 @@ namespace HIS_c.Service
             apiResult.total = patientDao.getAll(patient, 1, 1000000).Count;
             return apiResult;
         }
+
+        /// <summary>
+        /// 修改患者信息
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <returns></returns>
+        public ApiResult<Int32> updPatient(Patient patient)
+        {
+            int i = patientDao.updPatient(patient);
+            ApiResult<Int32> apiResult = new ApiResult<Int32>();
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "修改成功";
+                apiResult.data = 1;
+                apiResult.total = 1;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "修改失败";
+            }
+            return apiResult;
+        }
     }
 }

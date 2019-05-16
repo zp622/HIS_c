@@ -45,6 +45,16 @@ namespace HIS_c.Controllers
         //    return patientService.getAll(patient,currentPage,pageSize);
         //}
 
-
+        /// <summary>
+        /// 修改患者信息 
+        /// zp
+        /// </summary>
+        /// <param name="patient"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<Int32> editPatient(Patient patient)
+        {
+            return patientService.updPatient(patient);
+        }
     }
 }
