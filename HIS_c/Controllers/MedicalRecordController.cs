@@ -13,7 +13,11 @@ namespace HIS_c.Controllers
     public class MedicalRecordController : ApiController
     {
         private MedicalRecordService recordService = new MedicalRecordService();
-
+        /// <summary>
+        /// 新增
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
         [HttpPost]
         public ApiResult<List<MedicalRecord>> addRecord(MedicalRecord record)
         {
@@ -32,6 +36,17 @@ namespace HIS_c.Controllers
             int currentPage = obj["currentPage"].ToObject<Int32>();
             int pageSize = obj["pageSize"].ToObject<Int32>();
             return recordService.getAll(record,currentPage,pageSize);
+        }
+
+        /// <summary>
+        /// 修改病例信息
+        /// </summary>
+        /// <param name="record"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<Int32> updRecord([FromBody]MedicalRecord record)
+        {
+            return recordService.updRecord(record);
         }
     }
 }

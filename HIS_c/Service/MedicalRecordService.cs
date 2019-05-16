@@ -39,5 +39,25 @@ namespace HIS_c.Service
             apiResult.total = recordDao.getAll(obj, 1, 1000000).Count;
             return apiResult;
         }
+
+        public ApiResult<Int32> updRecord(MedicalRecord record)
+        {
+            int i = recordDao.updRecord(record);
+            ApiResult<Int32> apiResult = new ApiResult<Int32>();
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "修改成功";
+                apiResult.data = 1;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "修改失败";
+                apiResult.data = i;
+            }
+            return apiResult;
+        }
+
     }
 }

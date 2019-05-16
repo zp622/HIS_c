@@ -25,7 +25,7 @@ namespace HIS_c.Models
 
         public string chiefAction { get; set; }
 
-        public string presentIllness { get; set; }
+        public string presentIllness { get; set; }                              
 
         public string historyIllness { get; set; }
 

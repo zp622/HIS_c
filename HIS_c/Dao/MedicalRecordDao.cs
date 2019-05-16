@@ -96,6 +96,80 @@ namespace HIS_c.Dao
             return list;
         }
 
+        public int updRecord(MedicalRecord record)
+        {
+            string sql = "update his.b_medical_record set ";
+            if (record == null)
+            {
+                return 0;
+            }
+            else
+            {
+                if (isNotBlank(record.patientName))
+                {
+                    sql = sql + " patient_name = '" + record.patientName + "', ";
+                }
+                if (isNotBlank(record.hospital))
+                {
+                    sql = sql + " hospital = '" + record.hospital + "', ";
+                }
+                if (isNotBlank(record.department))
+                {
+                    sql = sql + " department = '" + record.department + "', ";
+                }
+                if (isNotBlank(record.visitTime))
+                {
+                    sql = sql + " visit_time = '" + record.visitTime + "', ";
+                }
+                if (isNotBlank(record.doctor))
+                {
+                    sql = sql + " doctor = '" + record.doctor + "', ";
+                }
+                if (isNotBlank(record.chiefAction))
+                {
+                    sql = sql + " chief_action = '" + record.chiefAction + "', ";
+                }
+                if (isNotBlank(record.presentIllness))
+                {
+                    sql = sql + " PRESENT_ILLNESS = '" + record.presentIllness + "', ";
+                }
+                if (isNotBlank(record.historyIllness))
+                {
+                    sql = sql + " history_illness = '" + record.historyIllness + "', ";
+                }
+                if (isNotBlank(record.phyExam))
+                {
+                    sql = sql + " phy_exam = '" + record.phyExam + "', ";
+                }
+                if (isNotBlank(record.tentDiag))
+                {
+                    sql = sql + " tent_diag = '" + record.tentDiag + "', ";
+                }
+                if (isNotBlank(record.trpl))
+                {
+                    sql = sql + " trpl = '" + record.trpl + "', ";
+                }
+                if (isNotBlank(record.auxiExam))
+                {
+                    sql = sql + " auxi_exam = '" + record.auxiExam + "', ";
+                }
+                if (isNotBlank(record.updater))
+                {
+                    sql = sql + " updater = '" + record.updater + "', ";
+                }
+            }
+            sql = sql + "update_time = to_timestamp('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "','yyyy-mm-dd hh24:mi:ss.ff')";
+            if (isNotBlank(record.registerNo) && isNotBlank(record.patientNo))
+            {
+                sql = sql + " where  register_no = '" + record.registerNo + "' and patient_no = '" + record.patientNo +"'";
+            }
+            else
+            {
+                return -1;
+            }
+            return OracleHelper.ExecuteSql(sql);
+        }
+
         public static bool isNotBlank(string str)
         {
             if (str != null && str.Length != 0)
