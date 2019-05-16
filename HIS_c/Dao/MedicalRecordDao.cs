@@ -12,8 +12,8 @@ namespace HIS_c.Dao
     {
         public int addRecord(MedicalRecord record)
         {
-            string sql = "insert into his.B_MEDICAL_RECORD(register_no,patient_no,creator)" +
-                "values(:register_no,:patient_no,:creator)";
+            string sql = "insert into his.B_MEDICAL_RECORD(register_no,patient_no,patient_name,department,creator)" +
+                "values(:register_no,:patient_no,:patient_name,:department,:creator)";
             //string sql = "insert into his.B_MEDICAL_RECORD(record_no,register_no,patient_name,patient_no,hospital,department,doctor,chief_action,present_illness,history_illness,phy_exam,tent_diag,trpl,auxi_exam,creator)" +
             //    "values(:record_no,:register_no,:patient_name,:patient_no,:hospital,:department,:doctor,:chief_action,:present_illness,:history_illness,:phy_exam,:tent_diag,:trpl,:auxi_exam,:creator)";
             //Random rd = new Random();
@@ -22,10 +22,10 @@ namespace HIS_c.Dao
             {
                 //new OracleParameter("record_no",record.patientNo),
                 new OracleParameter("register_no",record.registerNo),
-                //new OracleParameter("patient_name",record.patientName),
+                new OracleParameter("patient_name",record.patientName),
                 new OracleParameter("patient_no",record.patientNo),
                 //new OracleParameter("hospital",record.hospital),
-                //new OracleParameter("department",record.department),
+                new OracleParameter("department",record.department),
                 //new OracleParameter("visit_time",record.visitTime),
                 //new OracleParameter("doctor",record.doctor),
                 //new OracleParameter("chief_action",record.chiefAction),
