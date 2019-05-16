@@ -39,6 +39,10 @@ namespace HIS_c.Dao
                 "t.updater,t.create_time,t.update_time,t.patient_name,t.doctor,t.address,t.status from his.b_bookingform t where 1=1 ";
             if (form != null)
             {
+                if (isNotBlank(form.registerNo))
+                {
+                    sql = sql + " and t.register_no = '" + form.registerNo + "'";
+                }
                 if (isNotBlank(form.registerTime))
                 {
                     sql = sql + " and t.register_time = '" + form.registerTime + "'";
@@ -155,6 +159,18 @@ namespace HIS_c.Dao
             {
                 return list.Count; 
             }
+        }
+
+        public int updBookingForm(BookingForm bookingForm)
+        {
+            string sql = "update his.b_bookingform set status = :status, updater = :updater where register_no = :register_no";
+            OracleParameter[] parameters =
+            {
+                new OracleParameter("status",bookingForm.status),
+                new OracleParameter("register_no",bookingForm.registerNo),
+                new OracleParameter("updater",bookingForm.updater)
+            };
+            return OracleHelper.ExecuteSql(sql, parameters);
         }
 
         public static bool isNotBlank(string str)

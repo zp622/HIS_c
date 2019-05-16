@@ -50,5 +50,16 @@ namespace HIS_c.Controllers
             BookingForm form = obj["bookingForm"].ToObject<BookingForm>();
             return bookingFormService.queryBookFormCount(form);
         }
+
+        /// <summary>
+        /// 根据挂号单编号改变订单状态
+        /// </summary>
+        /// <param name="form"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<Int32> updBookingForm([FromBody]BookingForm form)
+        {
+            return bookingFormService.updBookingForm(form);
+        }
     }
 }

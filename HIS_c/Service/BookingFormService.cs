@@ -88,5 +88,24 @@ namespace HIS_c.Service
             }
             return apiResult;
         }
+
+        public ApiResult<Int32> updBookingForm(BookingForm bookingForm)
+        {
+            ApiResult<Int32> apiResult = new ApiResult<Int32>();
+            int i = bookingFromDao.updBookingForm(bookingForm);
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "修改成功";
+                apiResult.data = 1;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "修改失败";
+                apiResult.data = 0;
+            }
+            return apiResult;
+        }
     }
 }
