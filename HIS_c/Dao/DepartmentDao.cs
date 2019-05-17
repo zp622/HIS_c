@@ -40,7 +40,7 @@ namespace HIS_c.Dao
                 }
                 if (isNotBlank(dept.address))
                 {
-                    sql = sql + " and address = '%" + dept.address + "'%";
+                    sql = sql + " and address like '%" + dept.address + "%'";
                 }
             }
             string back = ") a where rownum<=:max) where rn>=:min";
