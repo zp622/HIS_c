@@ -73,18 +73,20 @@ namespace HIS_c.Dao
 
         public int addUser(UserModel user)
         {
-            string sql = "insert into his.h_user(job_number,password,name,role,name_en,login_flag,creator,user_status)" +
-                "values(:job_number,:password,:name,:role,:name_en,:login_flag,:creator,:user_status)";
+            string sql = "insert into his.h_user(job_number,password,name,role,creator,title_rank,belong_dept)" +
+                "values(:job_number,:password,:name,:role,:creator,:title_rank,:belong_dept)";
             OracleParameter[] parameters =
             {
                 new OracleParameter("job_number",user.jobNumber),
                 new OracleParameter("password",MD5Encrypt32(user.password)),
                 new OracleParameter("name",user.name),
                 new OracleParameter("role",user.role),
-                new OracleParameter("name_en",user.nameEn),
-                new OracleParameter("login_flag","N"),
+                //new OracleParameter("name_en",user.nameEn),
+                //new OracleParameter("login_flag","N"),
                 new OracleParameter("creator",user.creator),
-                new OracleParameter("user_status","有效"),
+                //new OracleParameter("user_status","有效"),
+                new OracleParameter("title_rank",user.titleRank),
+                new OracleParameter("belong_dept",user.belongDept),
             };
             return OracleHelper.ExecuteSql(sql,parameters);
         }
@@ -141,7 +143,7 @@ namespace HIS_c.Dao
         public List<UserModel> getUser(UserModel user,int currentPage,int pageSize)
         {
             string front = "select * from (select a.*,rownum rn from (";
-            string sql = "select t.JOB_NUMBER,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.creator,t.create_time,t.UPDATER,t.UPDATE_TIME,t.USER_STATUS from H_USER t where 1=1 ";
+            string sql = "select t.PASSWORD,t.JOB_NUMBER,t.NAME,t.ROLE,t.NAME_EN,t.LOGIN_FLAG,t.creator,t.create_time,t.UPDATER,t.UPDATE_TIME,t.USER_STATUS from H_USER t where 1=1 ";
             if (user != null)
             {
                 if (isNotBlank(user.jobNumber))
@@ -171,6 +173,7 @@ namespace HIS_c.Dao
                 UserModel userModel = new UserModel();
                 userModel.jobNumber = reader["JOB_NUMBER"].ToString();
                 userModel.name = reader["NAME"].ToString();
+                userModel.password = reader["PASSWORD"].ToString();
                 userModel.role = reader["ROLE"].ToString();
                 userModel.nameEn = reader["NAME_EN"].ToString();
                 userModel.loginFlag = reader["LOGIN_FLAG"].ToString();

@@ -14,8 +14,8 @@ namespace HIS_c.Dao
     {
         public int addMember(Member member)
         {
-            string sql = "insert into his.h_member(job_number,id,name,sex,famous,birthday,title_rank,career_experience,address,email,phone,work_date,work_term,degree,creator)" +
-                "values(:job_number,:id,:name,:sex,:famous,:birthday,:title_rank,:career_experience,:address,:email,:phone,:work_date,:work_term,:degree,:creator)";
+            string sql = "insert into his.h_member(job_number,id,name,sex,famous,birthday,title_rank,career_experience,address,email,phone,work_date,degree,creator,belong_dept)" +
+                "values(:job_number,:id,:name,:sex,:famous,:birthday,:title_rank,:career_experience,:address,:email,:phone,:work_date,:degree,:creator,:belong_dept)";
             string now = "to_date('" + System.DateTime.Now.ToString("yyyy-MM-dd HH24:mi:ss") + "','yyyy-MM-dd HH24:mi:ss')";
             OracleParameter[] parameters =
             {
@@ -31,10 +31,11 @@ namespace HIS_c.Dao
                 new OracleParameter("email",member.email),
                 new OracleParameter("phone",member.phone),
                 new OracleParameter("work_date",member.workDate),
-                new OracleParameter("work_term",member.workTerm),
+                //new OracleParameter("work_term",member.workTerm),
                 new OracleParameter("degree",member.degree),
                 new OracleParameter("creator",member.creator),
                 //new OracleParameter("create_time",now),
+                new OracleParameter("belong_dept",member.belongDept),
             };
             return OracleHelper.ExecuteSql(sql, parameters);
         }

@@ -15,8 +15,26 @@ namespace HIS_c.Service
 
         public ApiResult<List<Member>> addMenber(Member member)
         {
+            UserDao userDao = new UserDao();
+            UserModel user = new UserModel();
+            user.jobNumber = member.jobNumber;
+            user.name = member.name;
+            user.password = member.jobNumber;
+            if (member.titleRank=="前台")
+            {
+                user.role = "receptionist";
+            }
+            else
+            {
+                user.role = "doctor";
+            }
+            user.titleRank = member.titleRank;
+            user.belongDept = member.belongDept;
+            user.creator = member.creator;
+            
             int i = memberDao.addMember(member);
-            if (i == 1)
+            int y = userDao.addUser(user);
+            if (i == 1 && y == 1)
             {
                 apiResult.code = 200;
                 apiResult.message = "添加成功";
