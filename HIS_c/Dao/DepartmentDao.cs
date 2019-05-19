@@ -5,6 +5,7 @@ using System.Web;
 using HIS_c.Models;
 using System.Data.OracleClient;
 using HIS_c.Utils;
+using System.Collections;
 
 namespace HIS_c.Dao
 {
@@ -69,6 +70,67 @@ namespace HIS_c.Dao
                 list.Add(department);
             }
             return list;
+        }
+
+
+        public int updDept(Department dept)
+        {
+            string sql = "update his.b_department set ";
+            if (isNotBlank(dept.deptName))
+            {
+                sql = sql + "dept_name = '" + dept.deptName + "',";
+            }
+            if (isNotBlank(dept.address))
+            {
+                sql = sql + "address = '" + dept.address + "',";
+            }
+            if (isNotBlank(dept.manager))
+            {
+                sql = sql + "manager = '" + dept.manager + "',";
+            }
+            if (isNotBlank(dept.phone))
+            {
+                sql = sql + "phone = '" + dept.phone + "',";
+            }
+            if (isNotBlank(dept.introduction))
+            {
+                sql = sql + "introduction = '" + dept.introduction + "',";
+            }
+            if (isNotBlank(dept.members))
+            {
+                sql = sql + "members = '" + dept.members + "',";
+            }
+            if (isNotBlank(dept.updater))
+            {
+                sql = sql + "updater = '" + dept.updater + "',";
+            }
+            sql = sql + "update_time = to_timestamp('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "','yyyy-mm-dd hh24:mi:ss.ff')";
+            if (isNotBlank(dept.deptNo))
+            {
+                sql = sql + "where dept_no = '" + dept.deptNo + "'";
+            }
+            else
+            {
+                return -1;
+            }
+            return OracleHelper.ExecuteSql(sql);
+        }
+
+        /// <summary>
+        /// 删除 事务
+        /// </summary>
+        /// <param name="dept"></param>
+        /// <returns></returns>
+        public int delDept(List<Department> dept)
+        {
+            ArrayList sqlList = new ArrayList();
+            for (int i = 0; i < dept.Count; i++)
+            {
+                Department department = dept[i];
+                string sql = "delete from his.b_department t where t.dept_no = '" + department.deptNo + "'";
+                sqlList.Add(sql);
+            }
+            return OracleHelper.ExecuteSqlTran(sqlList);
         }
 
         public static bool isNotBlank(string str)

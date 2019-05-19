@@ -39,5 +39,48 @@ namespace HIS_c.Service
             apiResult.total = departmentDao.getDept(dept, 1, 1000000).Count;
             return apiResult;
         }
+
+        /// <summary>
+        /// 修改科室信息
+        /// </summary>
+        /// <param name=""></param>
+        /// <returns></returns>
+        public ApiResult<Int32> updDept(Department dept)
+        {
+            int i = departmentDao.updDept(dept);
+            ApiResult<Int32> apiResult = new ApiResult<Int32>();
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "修改成功";
+                apiResult.data = 1;
+                apiResult.total = 1;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "修改失败";
+            }
+            return apiResult;
+        }
+
+        public ApiResult<Int32> delDept(List<Department> dept)
+        {
+            int i = departmentDao.delDept(dept);
+            ApiResult<Int32> apiResult = new ApiResult<Int32>();
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "删除成功";
+                apiResult.data = 1;
+                apiResult.total = 1;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "删除失败";
+            }
+            return apiResult;
+        }
     }
 }
