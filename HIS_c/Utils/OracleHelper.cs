@@ -111,7 +111,7 @@ namespace HIS_c.Utils
         /// 执行多条SQL语句，实现数据库事务。  
         /// </summary>  
         /// <param name="SQLStringList">多条SQL语句</param>       
-        public static void ExecuteSqlTran(ArrayList SQLStringList)
+        public static int ExecuteSqlTran(ArrayList SQLStringList)
         {
             using (OracleConnection conn = new OracleConnection(connectionString))
             {
@@ -132,6 +132,7 @@ namespace HIS_c.Utils
                         }
                     }
                     tx.Commit();
+                    return 1;
                 }
                 catch (System.Data.OracleClient.OracleException E)
                 {

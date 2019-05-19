@@ -22,7 +22,7 @@ namespace HIS_c.Models
         //职称等级
         public string titleRank { get; set; }
         //从业经历
-        public string careerExperince { get; set; }
+        public string careerExperience { get; set; }
         //住址
         public string address { get; set; }
         //邮箱

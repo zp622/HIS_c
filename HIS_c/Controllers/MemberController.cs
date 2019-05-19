@@ -48,5 +48,17 @@ namespace HIS_c.Controllers
         {
             return memberService.updMember(member);
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="member"></param>
+        /// <returns></returns>
+        [HttpPost]
+        public ApiResult<List<Member>> delMember([FromBody]List<Member> memberList)
+        {
+            List<Member> m = new List<Member>();
+            return null;
+        }
     }
 }

@@ -83,9 +83,9 @@ namespace HIS_c.Service
             return apiResult;
         }
 
-        public ApiResult<List<UserModel>> delUser(string jobNumber)
+        public ApiResult<List<UserModel>> delUser(List<UserModel> user)
         {
-            if (userDao.delUser(jobNumber) == 1)
+            if (userDao.delUser(user) == 1)
             {
                 apiResult.code = 200;
                 apiResult.message = "删除成功";

@@ -1,6 +1,7 @@
 ﻿using HIS_c.Models;
 using HIS_c.Utils;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Data;
 using System.Data.OracleClient;
@@ -91,14 +92,16 @@ namespace HIS_c.Dao
             return OracleHelper.ExecuteSql(sql,parameters);
         }
 
-        public int delUser(string jobNumber)
+        public int delUser(List<UserModel> user)
         {
-            string sql = "update his.h_user t set t.user_status = '无效' where t.job_number = :jobNumber";
-            OracleParameter[] parameters =
+            ArrayList sqlList = new ArrayList();
+            for (int i = 0; i < user.Count; i++)
             {
-                new OracleParameter("jobNumber",jobNumber)
-            };
-            return OracleHelper.ExecuteSql(sql, parameters);
+                UserModel userModel = user[i];
+                string sql = "update his.h_user t set t.user_status = '无效' where t.job_number = '" + userModel.jobNumber + "'";
+                sqlList.Add(sql);
+            }
+            return OracleHelper.ExecuteSqlTran(sqlList);
         }
 
         public int updUser(UserModel user)
@@ -131,7 +134,7 @@ namespace HIS_c.Dao
             sql = sql + "update_time = to_timestamp('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "','yyyy-mm-dd hh24:mi:ss.ff')";
             if (isNotBlank(user.jobNumber))
             {
-                sql = sql + "where job_number = " + user.jobNumber;
+                sql = sql + "where job_number = '" + user.jobNumber + "'";
             }
             else
             {

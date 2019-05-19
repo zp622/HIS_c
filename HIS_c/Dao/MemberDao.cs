@@ -26,7 +26,7 @@ namespace HIS_c.Dao
                 new OracleParameter("famous",member.famous),
                 new OracleParameter("birthday",member.birthday),
                 new OracleParameter("title_rank",member.titleRank),
-                new OracleParameter("career_experience",member.careerExperince),
+                new OracleParameter("career_experience",member.careerExperience),
                 new OracleParameter("address",member.address),
                 new OracleParameter("email",member.email),
                 new OracleParameter("phone",member.phone),
@@ -81,7 +81,7 @@ namespace HIS_c.Dao
                 member.famous = reader["famous"].ToString();
                 member.birthday = reader["birthday"].ToString();
                 member.titleRank = reader["title_rank"].ToString();
-                member.careerExperince = reader["career_experience"].ToString();
+                member.careerExperience = reader["career_experience"].ToString();
                 member.address = reader["address"].ToString();
                 member.email = reader["email"].ToString();
                 member.phone = reader["phone"].ToString();
@@ -131,9 +131,9 @@ namespace HIS_c.Dao
             {
                 sql = sql + "title_rank = '" + member.titleRank + "',";
             }
-            if (isNotBlank(member.careerExperince))
+            if (isNotBlank(member.careerExperience))
             {
-                sql = sql + "career_experience = '" + member.careerExperince + "',";
+                sql = sql + "career_experience = '" + member.careerExperience + "',";
             }
             if (isNotBlank(member.address))
             {
@@ -170,7 +170,7 @@ namespace HIS_c.Dao
             sql = sql + "update_time = to_timestamp('" + DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss.fff") + "','yyyy-mm-dd hh24:mi:ss.ff')";
             if (isNotBlank(member.jobNumber))
             {
-                sql = sql + "where job_number = " + member.jobNumber;
+                sql = sql + "where job_number = '" + member.jobNumber + "'";
             }
             else
             {

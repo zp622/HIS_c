@@ -58,9 +58,9 @@ namespace HIS_c.Controllers
         /// <param name="jobNumber"></param>
         /// <returns></returns>
         [HttpPost]
-        public ApiResult<List<UserModel>> delUser([FromBody]UserModel user)
+        public ApiResult<List<UserModel>> delUser([FromBody]List<UserModel> user)
         {
-            return userService.delUser(user.jobNumber);
+            return userService.delUser(user);
         }
 
         /// <summary>
@@ -90,7 +90,7 @@ namespace HIS_c.Controllers
         /// <summary>
         /// 判断职工号知否存在，如果已经存在返回已有职工的信息
         /// </summary>
-        /// <param name="jobNumber"></param>
+        /// <param name="jobNumber"></param> 
         /// <returns></returns>
         [HttpPost]
         public ApiResult<UserModel> isExit([FromBody]UserModel user)
