@@ -49,15 +49,15 @@ namespace HIS_c.Dao
             if (obj != null)
             {
                 if (isNotBlank(obj.registerNo)){
-                    sql = sql + " and register_no = " + obj.registerNo;
+                    sql = sql + " and register_no = '" + obj.registerNo + "'";
                 }
                 if (isNotBlank(obj.patientNo))
                 {
-                    sql = sql + " and patient_no = " + obj.patientNo;
+                    sql = sql + " and patient_no = '" + obj.patientNo + "'";
                 }
                 if (isNotBlank(obj.patientName))
                 {
-                    sql = sql + " and patient_name = " + obj.patientName;
+                    sql = sql + " and patient_name = '" + obj.patientName + "'";
                 }
             }
             string back = ") a where rownum<=:max) where rn>=:min";

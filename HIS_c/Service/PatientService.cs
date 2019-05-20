@@ -47,9 +47,16 @@ namespace HIS_c.Service
         /// <returns></returns>
         public ApiResult<Int32> updPatient(Patient patient)
         {
+            MedicalRecord medicalRecord = new MedicalRecord();
+            medicalRecord.patientNo = patient.patientNo;
+            MedicalRecordDao medicalRecordDao = new MedicalRecordDao();
+            List<MedicalRecord> list = medicalRecordDao.getAll(medicalRecord, 1, 100000);
+            medicalRecord.registerNo = list[0].registerNo;
+            medicalRecord.patientName = patient.name;
+            int y = medicalRecordDao.updRecord(medicalRecord);
             int i = patientDao.updPatient(patient);
             ApiResult<Int32> apiResult = new ApiResult<Int32>();
-            if (i == 1)
+            if (i == 1 && y == 1)
             {
                 apiResult.code = 200;
                 apiResult.message = "修改成功";
