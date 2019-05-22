@@ -107,5 +107,24 @@ namespace HIS_c.Service
             }
             return apiResult;
         }
+
+        public ApiResult<int> ttsFun(string msg)
+        {
+            ApiResult<int> apiResult = new ApiResult<Int32>();
+            int i = bookingFromDao.ttsFun(msg);
+            if (i == 1)
+            {
+                apiResult.code = 200;
+                apiResult.message = "呼叫成功";
+                apiResult.data = 1;
+            }
+            else
+            {
+                apiResult.code = 199;
+                apiResult.message = "呼叫失败";
+                apiResult.data = 0;
+            }
+            return apiResult;
+        }
     }
 }

@@ -6,6 +6,7 @@ using HIS_c.Models;
 using HIS_c.Utils;
 using System.Data.OracleClient;
 using System.Text;
+using System.Speech.Synthesis;
 
 namespace HIS_c.Dao
 {
@@ -171,6 +172,23 @@ namespace HIS_c.Dao
                 new OracleParameter("updater",bookingForm.updater)
             };
             return OracleHelper.ExecuteSql(sql, parameters);
+        }
+
+        public int ttsFun(string msg)
+        {
+            SpeechSynthesizer synth = new SpeechSynthesizer();
+            try
+            {
+                // Configure the audio output.   
+                synth.SetOutputToDefaultAudioDevice();
+                synth.Speak(msg);
+                return 1;
+            }
+            catch(Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+            
         }
 
         public static bool isNotBlank(string str)

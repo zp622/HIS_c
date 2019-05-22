@@ -61,5 +61,12 @@ namespace HIS_c.Controllers
         {
             return bookingFormService.updBookingForm(form);
         }
+
+        [HttpPost]
+        public ApiResult<int> ttsFun([FromBody]JObject obj)
+        {
+            string voiceMessage = obj["voiceMessage"].ToString();
+            return bookingFormService.ttsFun(voiceMessage);
+        }
     }
 }
