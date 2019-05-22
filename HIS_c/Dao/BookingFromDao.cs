@@ -72,7 +72,7 @@ namespace HIS_c.Dao
                     sql = sql + " and t.waiting_no = '" + form.waitingNo + "'";
                 }
             }
-            sql = sql + " order by register_no desc";
+            sql = sql + " order by register_no asc";
             string back = ") a where rownum<=:max) where rn>=:min";
             sql = front + sql + back;
             OracleParameter[] parameters =
